@@ -12,7 +12,11 @@ At the top of the window, the Event Viewer displays the total number of events m
 
 ![Question 1](./Images/question_1.png)
 
-To answer the question, there are **56 events** with Event ID **11**.
+answer:
+
+```
+56 events
+```
 
 ### 2 - Whenever a process is created in memory, an event with Event ID 1 is recorded with details such as command line, hashes, process path, parent process path, etc. This information is very useful for an analyst because it allows us to see all programs executed on a system, which means we can spot any malicious processes being executed. What is the malicious process that infected the victim's system?
 
