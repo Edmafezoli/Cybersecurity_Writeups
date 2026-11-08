@@ -4,6 +4,20 @@
 
 **Description:** Familiarization with Sysmon logs and relevant EventIDs for identifying and analyzing malicious activities on Windows systems. Based on a campaign investigated by Palo Alto Unit 42, involving a backdoored version of UltraVNC used by attackers to maintain access to compromised systems. The lab focuses on the initial access stage of the campaign.
 
+### Investigation Summary
+
+This investigation focused on analyzing a malware infection involving a backdoored version of UltraVNC, based on a campaign investigated by Palo Alto Unit 42.
+
+The analysis involved examining Sysmon events to identify the malicious executable, determine its download source, investigate file creation and timestamp manipulation, and reconstruct the malware's activities on the compromised system.
+
+By correlating multiple Sysmon Event IDs, including process creation, file creation, network connections, DNS queries, and process termination, I was able to reconstruct the sequence of events associated with the infection.
+
+### Tools Used
+
+- **Windows Event Viewer:** Used to filter and analyze Sysmon operational logs.
+- **Sysmon:** Used to investigate process creation, file activity, DNS queries, network connections, and process termination.
+- **Event ID Analysis:** Used to correlate relevant events and reconstruct the malware execution timeline.
+
 ### 1 - How many Event logs are there with Event ID 11?
 
 I started filtering the event logs using Filter Current Log.
@@ -12,9 +26,9 @@ At the top of the window, the Event Viewer displays the total number of events m
 
 ![Question 1](./Images/question_1.png)
 
-answer:
+**Answer:**
 
-```
+```text
 56 events
 ```
 
@@ -28,9 +42,9 @@ I found **6 events** with Event ID **1**.
 
 After analyzing the events chronologically, I identified a suspicious process that had been executed by the user.
 
-Answer:
+**Answer:**
 
-```bash
+```text
 C:\Users\CyberJunkie\Downloads\Preventivo24.02.14.exe.exe
 ```
 
@@ -44,9 +58,9 @@ The file was downloaded from Dropbox.
 
 ![Question 3](./Images/question_3.png)
 
-Answer:
+**Answer:**
 
-```
+```text
 Dropbox
 ```
 
@@ -60,9 +74,9 @@ After analyzing these events, I identified the PDF file whose timestamps had bee
 
 The event shows that the PreviousCreationUtcTime was 2024-02-14 03:41:58.404, while the current CreationUtcTime is 2024-01-14 08:10:06.029.
 
-Answer:
+**Answer:**
 
-```
+```text
 2024-01-14 08:10:06
 ```
 
@@ -74,9 +88,9 @@ Since the question asks for a specific file, I identified it by analyzing the ev
 
 ![Question 5](./Images/question_5.png)
 
-answer:
+**Answer:**
 
-```
+```text
 C:\Users\CyberJunkie\AppData\Roaming\Photo and Fax Vn\Photo and vn 1.1.2\install\F97891C\WindowsVolume\Games\once.cmd
 ```
 
@@ -88,9 +102,9 @@ Before accessing Dropbox, the user queried the `www.example.com` domain, possibl
 
 ![Question 6](./Images/question_6.png)
 
-answer:
+**Answer:**
 
-```
+```text
 www.example.com
 ```
 
@@ -102,9 +116,9 @@ It shows that the source IP address `172.17.79.132` attempted to connect to the 
 
 ![Question 7](./Images/question_7.png)
 
-answer:
+**Answer:**
 
-```
+```text
 93.184.216.34
 ```
 
@@ -118,12 +132,17 @@ It shows the exact time when the process was terminated.
 
 The process was terminated on **2024-02-14** at **03:41:58**.
 
-answer:
+**Answer:**
 
-```
+```text
 2024-02-14 03:41:58
 ```
 
-### Key Takeaway
+### Key Takeaways
 
-This Sherlock demonstrated the importance of understanding Sysmon Event IDs when investigating security incidents. Knowing what each Event ID represents makes it easier to identify suspicious activities, correlate events, reconstruct process execution, and understand the sequence of actions performed on a compromised system.
+- **Sysmon Event ID Analysis:** Learned how to use relevant Sysmon Event IDs to investigate suspicious activities and identify potentially malicious behavior.
+- **Process Investigation:** Learned how to analyze process creation and termination events to identify suspicious executables and reconstruct execution timelines.
+- **File Activity Analysis:** Learned how to investigate file creation events and identify files dropped by malicious processes.
+- **Time Stomping Detection:** Learned how to identify timestamp manipulation by comparing previous and current file creation timestamps.
+- **Network Activity Analysis:** Learned how to investigate DNS queries and network connections to identify communication attempts made by suspicious processes.
+- **Malware Investigation:** Learned how to correlate different Sysmon events to reconstruct the sequence of activities performed by malware on a compromised Windows system.
